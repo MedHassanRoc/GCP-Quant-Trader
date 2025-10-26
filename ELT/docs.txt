@@ -1,0 +1,37 @@
+0) Install & env
+# From repo root
+pip install dbt-bigquery==1.*
+
+# Set env vars so profiles.yml can read them
+$env:PROJECT_ID = "<YOUR_PROJECT_ID>"
+$env:DATASET    = "quantedge"           # created by Terraform
+$env:LOCATION   = "US"
+$env:RAW_BUCKET = "$($env:PROJECT_ID)-quantedge-raw"
+
+
+1) dbt project skeleton
+ELT/
+├─ dbt_project.yml
+├─ profiles/
+│  └─ profiles.yml
+└─ models/
+   └─ bronze/
+      ├─ bronze__ohlcv_ext.sql
+      ├─ bronze__ohlcv.sql
+      └─ schema.yml
+
+2) create models
+
+3) Run dbt
+$env:DBT_PROFILES_DIR = "$PWD\ELT\profiles" #run from ELT project folder
+cd ELT
+dbt deps
+dbt parse
+dbt build --select raw
+
+dbt compile
+# Create/update external table
+dbt run-operation stage_external_sources --vars 'ext_full_refresh: true'
+dbt build --select raw__ohlcv
+dbt run
+dbt source freshness --select source:raw.ohlcv_ext

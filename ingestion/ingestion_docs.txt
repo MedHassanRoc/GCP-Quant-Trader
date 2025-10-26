@@ -1,0 +1,9 @@
+1- Install & auth
+
+python -m venv .venv
+. .\.venv\Scripts\Activate.ps1
+pip install -r ingestion\requirements.txt
+
+gcloud auth login
+gcloud config set project <YOUR_PROJECT_ID>
+gcloud auth application-default login

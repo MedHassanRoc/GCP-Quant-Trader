@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: "{{ env_var('DATASET') }}"
+    description: "External OHLCV parquet (Binance) in GCS"
+    freshness:
+      warn_after: {count: 26, period: hour}
+      error_after: {count: 52, period: hour}
+    loaded_at_field: "timestamp"   # used for freshness
+    tables:
+      - name: ohlcv_ext
+        description: "BTCUSDT 1h bars from GCS"
+        external:
+          options:
+            format: PARQUET
+            uris:
+              - "gs://{{ env_var('RAW_BUCKET') }}/BTCUSDT/1h/*/data.parquet"
+        meta:
+          owner: "you@domain.com"

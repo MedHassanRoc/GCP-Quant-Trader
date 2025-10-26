@@ -1,0 +1,11 @@
+quantedge:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth                      # uses gcloud ADC from your machine
+      project: "{{ env_var('PROJECT_ID') }}"
+      dataset: "{{ env_var('DATASET') }}"
+      location: "{{ env_var('LOCATION') }}"
+      threads: 4
+      priority: interactive

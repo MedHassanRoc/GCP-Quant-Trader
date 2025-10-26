@@ -1,0 +1,43 @@
+name: "quantedge"
+version: "1.0"
+config-version: 2
+profile: "quantedge"
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+analysis-paths: ["analysis"]
+docs-paths: ["docs"]
+
+models:
+  quantedge:
+    +materialized: view
+    +persist_docs:
+      relation: true
+      columns: true
+    +tags: ["quant", "btc", "gcp"]
+    +meta:
+      owner: "you@domain.com"
+      domain: "quant-trading"
+    +contract: {enforced: true}   # enable model contracts
+
+    raw:
+      +materialized: table
+      raw__ohlcv:
+        +partition_by: {field: dt, data_type: date}
+        +cluster_by: ["symbol","interval_"]
+        +require_partition_filter: false
+
+    int:
+      +materialized: table
+
+    mart:
+      +materialized: table
+
+tests:
+  +store_failures: true           # keep failures in the warehouse (handy for debugging)
+
+vars:
+  # If you still use env var directly, keep RAW_BUCKET via env_var
+  raw_bucket: "{{ env_var('RAW_BUCKET') }}"

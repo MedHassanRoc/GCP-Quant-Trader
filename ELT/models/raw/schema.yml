@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: raw__ohlcv
+    description: "Native BigQuery table seeded from external parquet for BTCUSDT 1h"
+    config:
+      contract: {enforced: true}
+      access: public
+    columns:
+      - name: timestamp
+        description: "Bar open time (UTC)"
+        data_type: timestamp
+        tests:
+          - not_null
+      - name: dt
+        description: "Date partition (UTC)"
+        data_type: date
+        tests: [not_null]
+      - name: open
+        description: "Open price"
+        data_type: float64
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      - name: high
+        data_type: float64
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_pair_values_A_greater_than_B:
+              column_A: high
+              column_B: low
+      - name: low
+        data_type: float64
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      - name: close
+        data_type: float64
+        tests:
+          - not_null
+      - name: volume
+        data_type: float64
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      - name: symbol
+        data_type: string
+        tests:
+          - not_null
+          - accepted_values: {values: ["BTCUSDT"]}
+      - name: interval_
+        data_type: string
+        tests:
+          - not_null
+          - accepted_values: {values: ["1h"]}
+      - name: source
+        data_type: string
+        tests:
+          - accepted_values: {values: ["binance"]}

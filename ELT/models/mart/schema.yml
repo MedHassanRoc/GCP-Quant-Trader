@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: mart__features_1h
+    description: "Feature set for BTCUSDT 1h: returns, SMA, RSI, vol, MACD"
+    config:
+      contract: {enforced: true}
+      access: public
+    columns:
+      - name: timestamp ; data_type: timestamp ; tests: [not_null]
+      - name: dt        ; data_type: date      ; tests: [not_null]
+      - name: close     ; data_type: float64   ; tests: [not_null]
+      - name: r1        ; data_type: float64
+      - name: sma_24    ; data_type: float64
+      - name: sma_96    ; data_type: float64
+      - name: rsi_14    ; data_type: float64
+      - name: vol_30    ; data_type: float64
+      - name: macd_sma  ; data_type: float64
+      - name: macd_signal_sma ; data_type: float64

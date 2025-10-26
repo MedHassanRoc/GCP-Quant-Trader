@@ -1,0 +1,27 @@
+
+
+1- Install tools (PowerShell as Admin)
+winget install --id Google.CloudSDK
+choco install terraform -y          # or winget install HashiCorp.Terraform
+
+2- Authenticate to GCP
+
+gcloud auth login
+gcloud config set project <YOUR_PROJECT_ID>
+gcloud auth application-default login
+
+3- Enable required APIs
+
+gcloud services enable compute.googleapis.com run.googleapis.com artifactregistry.googleapis.com bigquery.googleapis.com storage.googleapis.com monitoring.googleapis.com logging.googleapis.com cloudscheduler.googleapis.com pubsub.googleapis.com
+
+4- Create Terraform folder (local state) and put these files: main.tf, variables.tf, providers.tf, outputs.tf
+
+5- Run Terraform (PowerShell)
+
+From the folder:
+
+terraform init
+terraform fmt -check
+terraform validate
+terraform plan -var "project_id=<YOUR_PROJECT_ID>"
+terraform apply "terraform_out.txt"
