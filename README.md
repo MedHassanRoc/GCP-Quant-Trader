@@ -25,8 +25,9 @@ The platform combines best practices from **data engineering**, **analytics engi
 - **Automation & Orchestration (Airflow / Cloud Composer)** – orchestrates ingestion, dbt transformations, model training, and Vertex AI deployments.  
 - **Serving (FastAPI on Cloud Run)** – lightweight REST API exposing endpoints (`/health`, `/predict`) for real-time inference.  
 - **Monitoring (BigQuery + Cloud Monitoring)** – collects pipeline metrics, model drift, and API performance logs.  
-- **Visualization (Looker Studio)** – interactive dashboards for performance, feature metrics, and trading KPIs.  
+- **Visualization (Looker Studio)** – interactive dashboards for performance, feature metrics, and trading KPIs using LookMl.  
 - **CI/CD (GitHub Actions)** – automates testing, dbt and Terraform validation, container build, and Cloud Run deployment.
+
 
 ---
 
