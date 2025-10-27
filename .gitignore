@@ -1,74 +1,24 @@
-# --- Credentials / Secrets ---
-*.pem
-*.key
-*.p12
-*.crt
-*.cer
-*.der
-*.jks
-*.json
-!ELT/packages.yml            # keep packages manifest
-# If you *must* track a non-secret JSON, rename to .example.json and allowlist it explicitly
-
-# Gcloud / ADC (common locations & names)
-application_default_credentials.json
-.gcloud/
-.gcp/
-.gsa-key.json
-
-# --- Terraform ---
-.terraform/
-terraform.tfstate
-terraform.tfstate.*
-crash.log
-*.tfvars
-# (You CAN commit .terraform.lock.hcl if you want reproducible provider versions)
-
-# --- dbt artifacts ---
+# dbt artifacts & vendor packages
 ELT/target/
 ELT/logs/
-ELT/run/
-ELT/compiled/
-ELT/manifest.json
-ELT/run_results.json
 ELT/dbt_packages/
 ELT/profiles/profiles.yml
+ELT/profiles/.user.yml
 
-# --- Python ---
+# Python
 __pycache__/
-*.py[cod]
-*.pyo
-*.egg-info/
-.eggs/
-.pytest_cache/
-.mypy_cache/
+*.pyc
 .venv/
 venv/
 .env
 .env.*
 
-# --- Node (if any frontend) ---
-node_modules/
-npm-debug.log*
-yarn.lock
-pnpm-lock.yaml
+# Ingestion local config
+ingestion/config.yaml
 
-# --- Local data / outputs ---
-data/
-*.parquet
-*.csv
-*.tsv
-*.xlsx
-
-# --- Docker / Build ---
-dist/
-build/
-.coverage
-coverage.xml
-
-# --- Editors / OS ---
-.vscode/
-.idea/
-*.iml
-.DS_Store
-Thumbs.db
+# Terraform (keep lockfile tracked if you want reproducible providers)
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+crash.log
+*.tfvars
