@@ -37,7 +37,17 @@ models:
 
 tests:
   +store_failures: true           # keep failures in the warehouse (handy for debugging)
+  +schema: "{{ target.schema }}_dq"   # failures land in a sibling dataset, e.g. quantedge_dq
+
 
 vars:
   # If you still use env var directly, keep RAW_BUCKET via env_var
   raw_bucket: "{{ env_var('RAW_BUCKET') }}"
+
+snapshots:
+  quantedge:
+    +schema: "{{ target.schema }}_snap"   # -> e.g. quantedge_snap
+    +tags: ["snapshot"]
+    +persist_docs:
+      relation: true
+      columns: true

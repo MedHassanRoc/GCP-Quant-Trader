@@ -1,0 +1,14 @@
+version: 2
+exposures:
+  - name: cloud_run_api
+    type: application
+    url: "https://<cloud-run-url>/predict"
+    owner: { name: "....", email: "you@example.com" }
+    depends_on:
+      - ref('mart__labels')
+  - name: looker_dashboard
+    type: dashboard
+    url: "https://lookerstudio.google.com/..."
+    owner: { name: "....", email: "you@example.com" }
+    depends_on:
+      - ref('mart__features')

@@ -1,19 +1,132 @@
 version: 2
 
 models:
-  - name: mart__features_1h
-    description: "Feature set for BTCUSDT 1h: returns, SMA, RSI, vol, MACD"
+  - name: mart__features
+    description: "BTCUSDT 1h feature set: returns, SMA, RSI, volatility, MACD."
     config:
-      contract: {enforced: true}
+      contract:
+        enforced: true
       access: public
     columns:
-      - name: timestamp ; data_type: timestamp ; tests: [not_null]
-      - name: dt        ; data_type: date      ; tests: [not_null]
-      - name: close     ; data_type: float64   ; tests: [not_null]
-      - name: r1        ; data_type: float64
-      - name: sma_24    ; data_type: float64
-      - name: sma_96    ; data_type: float64
-      - name: rsi_14    ; data_type: float64
-      - name: vol_30    ; data_type: float64
-      - name: macd_sma  ; data_type: float64
-      - name: macd_signal_sma ; data_type: float64
+      - name: timestamp
+        data_type: timestamp
+      - name: dt
+        data_type: date
+      - name: symbol
+        data_type: string
+      - name: interval_
+        data_type: string
+      - name: close
+        data_type: float64
+      - name: r1
+        data_type: float64
+      - name: sma_24
+        data_type: float64
+      - name: sma_96
+        data_type: float64
+      - name: rsi_14
+        data_type: float64
+      - name: vol_30
+        data_type: float64
+      - name: macd_sma
+        data_type: float64
+      - name: macd_signal_sma
+        data_type: float64
+
+  - name: mart__features_plus
+    description: "BTCUSDT 1h features: Bollinger(20), ATR(14), VWAP(30), OBV."
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: timestamp
+        data_type: timestamp
+      - name: dt
+        data_type: date
+      - name: symbol
+        data_type: string
+      - name: interval_
+        data_type: string
+      - name: open
+        data_type: float64
+      - name: high
+        data_type: float64
+      - name: low
+        data_type: float64
+      - name: close
+        data_type: float64
+      - name: volume
+        data_type: float64
+      - name: bb_mid_20
+        data_type: float64
+      - name: bb_std_20
+        data_type: float64
+      - name: bb_dev_20
+        data_type: float64
+      - name: atr_14
+        data_type: float64
+      - name: vwap_30
+        data_type: float64
+      - name: obv
+        data_type: float64
+      - name: bb_low_20
+        data_type: float64
+      - name: bb_high_20
+        data_type: float64
+  - name: mart__labels
+    description: "Labels and splits derived from mart__features_plus (BTCUSDT, 1h)."
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: timestamp
+        data_type: timestamp
+        tests: [not_null]
+      - name: dt
+        data_type: date
+        tests: [not_null]
+      - name: symbol
+        data_type: string
+      - name: interval_
+        data_type: string
+      - name: close
+        data_type: float64
+        tests: [not_null]
+
+      # features coming from mart__features_plus via wildcard EXCEPT
+      - name: open
+        data_type: float64
+      - name: high
+        data_type: float64
+      - name: low
+        data_type: float64
+      - name: volume
+        data_type: float64
+      - name: bb_mid_20
+        data_type: float64
+      - name: bb_std_20
+        data_type: float64
+      - name: bb_dev_20
+        data_type: float64
+      - name: atr_14
+        data_type: float64
+      - name: vwap_30
+        data_type: float64
+      - name: obv
+        data_type: float64
+      - name: bb_low_20
+        data_type: float64
+      - name: bb_high_20
+        data_type: float64
+
+      # label fields
+      - name: close_fwd1
+        data_type: float64
+      - name: target_ret_1
+        data_type: float64
+      - name: target_up_1
+        data_type: int64
+      - name: split
+        data_type: string
