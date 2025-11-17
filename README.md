@@ -1,4 +1,4 @@
-# QuantEdge — End-to-End Quant Trading Analytics Platform
+# QuantEdge — End-to-End Quant Trading Analytics Platform (In progress)
 
 QuantEdge is a cloud-native trading analytics project that demonstrates the design and implementation of a full **data and machine learning pipeline** for quantitative trading using modern GCP technologies.
 
